@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: "mongo:${MONGO_VERSION:-latest}"
+    container_name: twitch-bot-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 3s

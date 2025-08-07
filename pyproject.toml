@@ -1,0 +1,27 @@
+[project]
+name = "twitch-bot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[tool.ruff]
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+extend-select = ["B", "C", "E", "F", "I", "T", "W"]
+extend-ignore = ["C401", "C901"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/docs/**/*.py" = ["T"]
+"**/tests/**/*.py" = ["C", "T"]
+"**/scripts/**/*.py" = ["T"]
+
+[tool.uv.workspace]
+members = [
+    "bot",
+    "backend",
+    "shared",
+]
