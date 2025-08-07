@@ -1,0 +1,23 @@
+FROM python:3.13.6-slim-bookworm
+ARG PACKAGE
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+
+RUN echo "PACKAGE is ${PACKAGE}"
+
+WORKDIR /app
+
+# Copy separately as it's a dependency for packages in core
+COPY shared /app/shared
+
+RUN --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-dev --package=$PACKAGE
+
+COPY bot /app/bot
+
+RUN --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-dev --package=$PACKAGE
+
+ENV PATH="/app/.venv/bin:$PATH"

@@ -13,3 +13,24 @@ services:
       timeout: 3s
       retries: 5
       start_period: 3s
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+      args:
+        PACKAGE: "bot"
+    container_name: twitch-bot
+    restart: always
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO__HOST=mongodb
+      - MONGO__PORT=27017
+      - MONGO__DB=twitch_bot
+    env_file:
+      - bot/.env
+    ports:
+      - "4343:4343"
+    command: ["uv", "run", "bot/src/main.py"]
+

@@ -1,11 +1,10 @@
 import asyncio
 import logging
 
+from config import BOT_SETTINGS
 from pymongo import AsyncMongoClient
 from twitchio import MultiSubscribePayload, authentication, eventsub, utils
 from twitchio.ext import commands
-
-from bot.src.config import BOT_SETTINGS
 
 LOGGER = logging.getLogger("Bot")
 
@@ -50,8 +49,23 @@ class Bot(commands.AutoBot):
         if resp.errors:
             LOGGER.warning("Failed to subscribe to: %r, for user: %s", resp.errors, payload.user_id)
 
+    async def load_tokens(self) -> None:
+        tokens_collection = self.database[BOT_SETTINGS.MONGO__DB]["tokens"]
+        rows = await tokens_collection.find({}).to_list(length=None)
+
+        if not rows:
+            return
+
+        for row in rows:
+            token = row.get("token")
+            refresh = row.get("refresh")
+            if token and refresh:
+                await self.add_token(token, refresh)
+            else:
+                LOGGER.warning("Token or refresh missing for user: %s", row.get("user_id"))
+
     async def add_token(self, token: str, refresh: str) -> authentication.ValidateTokenPayload:
-        # Make sure to call super() as it will add the tokens interally and return us some data...
+        # Make sure to call super() as it will add the tokens internally and return us some data...
         resp: authentication.ValidateTokenPayload = await super().add_token(token, refresh)
 
         # Store our tokens in MongoDB when they are authorized...
