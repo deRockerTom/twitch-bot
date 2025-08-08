@@ -10,4 +10,8 @@
     },
     "python.languageServer": "Pylance",
     "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.extraPaths": [
+      "./shared/src",
+      "./bot/src",
+    ],
 }

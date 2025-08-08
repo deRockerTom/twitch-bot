@@ -7,12 +7,14 @@ RUN echo "PACKAGE is ${PACKAGE}"
 
 WORKDIR /app
 
+COPY pyproject.toml uv.lock /app/
+
 # Copy separately as it's a dependency for packages in core
 COPY shared /app/shared
 
 RUN --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project --no-dev --package=$PACKAGE
+    uv sync --frozen --no-install-project --no-dev --package=shared
 
 COPY bot /app/bot
 
