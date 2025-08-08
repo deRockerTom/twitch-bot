@@ -1,0 +1,1 @@
+Place your nginx.crt and nginx.key files in this directory.

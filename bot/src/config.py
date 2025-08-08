@@ -19,5 +19,8 @@ class Settings(BaseSettings):
     CLIENT_ID: str = "your_client_id_here"  # Replace with your actual client ID
     CLIENT_SECRET: str = "your_client_secret_here"  # Replace with your actual client secret
 
+    USE_HTTPS: bool = False  # Set to True if using HTTPS
+    DOMAIN: str = "localhost"  # Domain for the bot's web server
+
 
 BOT_SETTINGS = Settings()

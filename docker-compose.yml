@@ -28,9 +28,19 @@ services:
       - MONGO__HOST=mongodb
       - MONGO__PORT=27017
       - MONGO__DB=twitch-bot
+      - USE_HTTPS=True
     env_file:
       - bot/.env
-    ports:
-      - "4343:4343"
     command: ["uv", "run", "bot/src/main.py"]
+
+  nginx-bot:
+    image: nginx:latest
+    container_name: twitch-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    ports:
+      - "4343:4343"  # HTTPS port
+    depends_on:
+      - bot
 

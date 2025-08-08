@@ -10,17 +10,17 @@ from shared import DatabaseClient, Token
 
 LOGGER = logging.getLogger("Bot")
 
+LOGGER.warning("Using BOT_SETTINGS: %s", BOT_SETTINGS)
+
 
 class MyStarletteAdapter(StarletteAdapter):
-    def __init__(self, **kwargs):
+    def __init__(self, use_https: bool, **kwargs):
         super().__init__(**kwargs)
-        if "domain" not in kwargs:
-            self._domain = "http://localhost:4343"
+        self._domain = f"{'https' if use_https else 'http'}://{kwargs['domain']}:{kwargs['port']}"
 
 
 adapter = MyStarletteAdapter(
-    host="0.0.0.0",
-    port=4343,
+    host="0.0.0.0", port=4343, use_https=BOT_SETTINGS.USE_HTTPS, domain=BOT_SETTINGS.DOMAIN
 )
 
 

@@ -20,3 +20,7 @@ mongo-data/
 
 # environment variables
 .env
+
+# Nginx configuration
+nginx/certs/nginx.key
+nginx/certs/nginx.crt
