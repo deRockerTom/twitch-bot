@@ -50,7 +50,7 @@ async def watch_db():
                     timestamp=doc["timestamp"],
                 )
                 LOGGER.info("Sending message: %s", msg)
-                await asyncio.gather(*[ws.send(msg.model_dump()) for ws in connected_clients])
+                await asyncio.gather(*[ws.send(msg.model_dump_json()) for ws in connected_clients])
 
 
 # Main function to start the WebSocket server
