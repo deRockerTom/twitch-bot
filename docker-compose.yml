@@ -64,6 +64,7 @@ services:
     ports:
       - "8081:8081"
     command: ["uv", "run", "websockets_server/src/main.py"]
+
   frontend:
     build:
       context: frontend
@@ -74,3 +75,21 @@ services:
       - "3000:3000"
     depends_on:
       - websockets-server
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+      args:
+        PACKAGE: "backend"
+    container_name: twitch-backend
+    restart: always
+    environment:
+      - MONGO__HOST=mongodb
+      - MONGO__PORT=27017
+      - MONGO__DB=twitch-bot
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    command: ["uv", "run", "backend/src/main.py"]
