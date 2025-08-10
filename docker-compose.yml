@@ -64,11 +64,11 @@ services:
     ports:
       - "8081:8081"
     command: ["uv", "run", "websockets_server/src/main.py"]
-  overlay_ui:
+  frontend:
     build:
-      context: overlays_frontend
+      context: frontend
       dockerfile: Dockerfile
-    container_name: twitch-overlay-ui
+    container_name: twitch-frontend
     restart: always
     ports:
       - "3000:3000"
