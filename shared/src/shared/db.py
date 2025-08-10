@@ -2,6 +2,7 @@ import logging
 
 from pymongo import AsyncMongoClient
 
+from shared.message import MessagesDBFunctions
 from shared.tokens import TokensDBFunctions
 
 LOGGER = logging.getLogger(__name__)
@@ -17,6 +18,7 @@ class DatabaseClient(AsyncMongoClient):
         super().__init__(host=host, port=port)
         self.database_name = database_name
         self.tokens = TokensDBFunctions(self)
+        self.messages = MessagesDBFunctions(self)
 
     async def __aenter__(self) -> "DatabaseClient":
         await super().__aenter__()
