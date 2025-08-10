@@ -1,0 +1,15 @@
+[project]
+name = "websockets_server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "shared",
+    "websockets>=15.0.1",
+]
+
+[tool.uv.sources]
+shared = { workspace = true }

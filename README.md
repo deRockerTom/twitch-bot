@@ -25,9 +25,9 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx/certs/nginx.ke
 Let's say your domain is `example.com`, once the bot is running, you'll need:
 - To Register the twitch bot account:
     - Login to your Twitch account
-    - Go to `https://example.com:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot&force_verify=true`
+    - Go to `https://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot&force_verify=true`
     - Authorize the bot
 - To Register the bot in your channel:
   - Login to your Twitch account
-    - Go to `https://example.com:4343/oauth?scopes=channel:bot&force_verify=true`
+    - Go to `https://localhost:4343/oauth?scopes=channel:bot&force_verify=true`
     - Authorize the bot

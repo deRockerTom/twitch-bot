@@ -20,8 +20,4 @@ extend-ignore = ["C401", "C901"]
 "**/scripts/**/*.py" = ["T"]
 
 [tool.uv.workspace]
-members = [
-    "bot",
-    "backend",
-    "shared",
-]
+members = ["bot", "backend", "shared", "websockets_server"]
